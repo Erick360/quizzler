@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 void main() => runApp(const Quizzler());
 
@@ -41,7 +42,7 @@ class _QuizPageState extends State<QuizPage> {
     ),
     */
     ];
-
+/*
   List <String>questions = [
     'You can lead a cow down stairs but not stairs',
     'Approximately one quarter of human bones are in the feet',
@@ -50,9 +51,18 @@ class _QuizPageState extends State<QuizPage> {
 
   List<bool>answers = [
     false,
-    false,
+    true,
     true
   ];
+
+  Question q1 = Question('You can lead a cow down stairs but not stairs', false);
+*/
+  List<Question> questionBank = [
+    Question('You can lead a cow down stairs but not stairs', false ),
+    Question('Approximately one quarter of human bones are in the feet', true),
+    Question('A slug\'s blood is green', true),
+  ];
+
   int questionNumber = 0;
 
   @override
@@ -67,7 +77,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[questionNumber],
+                questionBank[questionNumber].questionText,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -94,11 +104,11 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked true.
-                bool correctAnswer = answers[questionNumber];
+                bool correctAnswer = questionBank[questionNumber].questionAnswer;
                 if(correctAnswer == true){
-
+                    print("");
                 }else{
-
+                    print("");
                 }
 
                 setState(() {
@@ -125,7 +135,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
-                bool correctAnswer = answers[questionNumber];
+                bool correctAnswer = questionBank[questionNumber].questionAnswer;
                 if(correctAnswer == false){
 
                 }
