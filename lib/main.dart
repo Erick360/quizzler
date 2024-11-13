@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(const Quizzler());
 
@@ -57,13 +59,7 @@ class _QuizPageState extends State<QuizPage> {
 
   Question q1 = Question('You can lead a cow down stairs but not stairs', false);
 */
-  List<Question> questionBank = [
-    Question('You can lead a cow down stairs but not stairs', false ),
-    Question('Approximately one quarter of human bones are in the feet', true),
-    Question('A slug\'s blood is green', true),
-  ];
 
-  int questionNumber = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +73,8 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionBank[questionNumber].questionText,
+                //quizBrain.questionBank[questionNumber].questionText,
+                quizBrain.getQuestion(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -104,15 +101,16 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked true.
-                bool correctAnswer = questionBank[questionNumber].questionAnswer;
+                //bool correctAnswer = quizBrain.questionBank[questionNumber].questionAnswer;
+                bool correctAnswer = quizBrain.getAnswer();
                 if(correctAnswer == true){
-                    print("");
+
                 }else{
-                    print("");
+
                 }
 
                 setState(() {
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
 
               },
@@ -135,13 +133,16 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
-                bool correctAnswer = questionBank[questionNumber].questionAnswer;
+                //bool correctAnswer = quizBrain.questionBank[questionNumber].questionAnswer;
+                bool correctAnswer = quizBrain.getAnswer();
                 if(correctAnswer == false){
+
+                }else{
 
                 }
 
                 setState(() {
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
 
               },

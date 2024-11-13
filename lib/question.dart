@@ -7,3 +7,5 @@ class Question {
 
 }
 
+Question newQuestion = Question('', false);
+
