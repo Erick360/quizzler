@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'quiz_brain.dart';
 
 QuizBrain quizBrain = QuizBrain();
@@ -32,7 +33,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List <Icon>scoreKeeper = [
+  List<Icon> scoreKeeper = [
     /*
     const Icon(
     Icons.check,
@@ -43,7 +44,42 @@ class _QuizPageState extends State<QuizPage> {
       color: Colors.red,
     ),
     */
-    ];
+  ];
+
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizBrain.getAnswer();
+    setState(() {
+    if(quizBrain.isFinished() == true){
+      Alert(
+        context: context,
+        title: 'Finished',
+        desc: 'You have reached the end of the quiz.',
+      ).show();
+
+      quizBrain.reset();
+
+      scoreKeeper = [];
+    }else {
+      if (userPickedAnswer == correctAnswer) {
+        scoreKeeper.add(
+            const Icon(
+                Icons.check,
+                color: Colors.green
+            )
+        );
+      } else {
+        scoreKeeper.add(
+            const Icon(
+                Icons.close,
+                color: Colors.red
+            )
+        );
+      }
+      quizBrain.nextQuestion();
+    }
+    });
+  }
+
 /*
   List <String>questions = [
     'You can lead a cow down stairs but not stairs',
@@ -59,7 +95,6 @@ class _QuizPageState extends State<QuizPage> {
 
   Question q1 = Question('You can lead a cow down stairs but not stairs', false);
 */
-
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +124,10 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(15.0),
             child: TextButton(
               style: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all<Color>(Colors.white), // Text color
-                backgroundColor: WidgetStateProperty.all<Color>(Colors.green), // Background color
+                foregroundColor:
+                    WidgetStateProperty.all<Color>(Colors.white), // Text color
+                backgroundColor: WidgetStateProperty.all<Color>(
+                    Colors.green), // Background color
               ),
               child: const Text(
                 'True',
@@ -102,17 +139,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked true.
                 //bool correctAnswer = quizBrain.questionBank[questionNumber].questionAnswer;
-                bool correctAnswer = quizBrain.getAnswer();
-                if(correctAnswer == true){
-
-                }else{
-
-                }
-
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
-
+                checkAnswer(true);
               },
             ),
           ),
@@ -124,7 +151,7 @@ class _QuizPageState extends State<QuizPage> {
               style: const ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll<Color>(Colors.red),
               ),
-              child:const Text(
+              child: const Text(
                 'False',
                 style: TextStyle(
                   fontSize: 20.0,
@@ -134,6 +161,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked false.
                 //bool correctAnswer = quizBrain.questionBank[questionNumber].questionAnswer;
+                /*
                 bool correctAnswer = quizBrain.getAnswer();
                 if(correctAnswer == false){
 
@@ -144,7 +172,8 @@ class _QuizPageState extends State<QuizPage> {
                 setState(() {
                   quizBrain.nextQuestion();
                 });
-
+                */
+                checkAnswer(false);
               },
             ),
           ),
